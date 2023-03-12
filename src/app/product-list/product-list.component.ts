@@ -1,21 +1,37 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 
-import { products } from '../products';
+import { Product } from '../products';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
 })
-export class ProductListComponent {
-  products = [...products];
+export class ProductListComponent implements OnInit {
+  //products = [...products];
+  products: Product[] = [];
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.makeRequest();
+  }
 
   share() {
-    window.alert('The product has been shared!');
+    window.alert('¡El producto ha sido compartido!');
   }
 
   onNotify() {
-    window.alert('Serás notificado cuando haya stock');
+    window.alert('Recibirás una notificación cuando el producto sea vendido');
+  }
+
+  makeRequest() {
+    this.http
+      .get<Product[]>('https://fakestoreapi.com/products')
+      .subscribe((response) => {
+        this.products = response;
+      });
   }
 }
 

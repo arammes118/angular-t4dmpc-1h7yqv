@@ -1,22 +1,25 @@
-<h2>Products</h2>
+<h2>Productos</h2>
 
 <div *ngFor="let product of products">
   <h3>
     <a
-      [title]="product.name + ' details'"
+      [title]="product.title + ' details'"
       [routerLink]="['/products', product.id]"
-    >
-      {{ product.name }}
+      >>
+      {{ product.title }}
     </a>
   </h3>
 
-  <p *ngIf="product.description">Descripcion: {{ product.description }}</p>
+  <img [src]="product.image" alt="imagen del producto" style="width: 100px;" />
+
+  <p *ngIf="product.description">Description: {{ product.description }}</p>
 
   <button type="button" (click)="share()">Share</button>
 
   <app-product-alerts [product]="product" (notify)="onNotify()">
   </app-product-alerts>
 </div>
+
 <!-- 
 Copyright Google LLC. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that
